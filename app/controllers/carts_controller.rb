@@ -83,7 +83,8 @@ class CartsController < ApplicationController
 
   def clear_cart
     reset_session
-    render json: {message: "cart cleared"}
+    initialize_session
+    render json: session[:cart]
   end
 
   private
