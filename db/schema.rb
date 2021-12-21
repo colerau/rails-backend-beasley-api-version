@@ -10,23 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_21_070259) do
+ActiveRecord::Schema.define(version: 2021_12_21_102243) do
 
-  create_table "body_butters", force: :cascade do |t|
-    t.string "scent"
-    t.decimal "price"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table "items", force: :cascade do |t|
     t.string "category"
-  end
-
-  create_table "bubble_candles", force: :cascade do |t|
     t.string "scent"
-    t.decimal "price"
     t.string "color"
+    t.decimal "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "category"
   end
 
 end

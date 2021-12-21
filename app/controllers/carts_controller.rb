@@ -3,20 +3,25 @@ class CartsController < ApplicationController
 
   def add_to_cart
     # product_category will be name of a model
-    product_category = cart_params[:category].delete(' ').classify.constantize
+    # product_category = cart_params[:category].delete(' ').classify.constantize
 
-    if product_category == "BubbleCandle"
-      options = product_category.where(scent: cart_params[:scent])
-      color = cart_params[:color]
-      product = options.where(color: color)
-    else 
-      product = product_category.find_by(scent: cart_params[:scent])
+    # if product_category == "BubbleCandle"
+    #   options = product_category.where(scent: cart_params[:scent])
+    #   color = cart_params[:color]
+    #   product = options.where(color: color)
+    # else 
+
+    # ? product for some reason is inside an array of length 1
+    if cart_params[:category] == "Bubble Candle"
+      product = Item.where(category: cart_params[:category], scent: cart_params[:scent], color: cart_params[:color])[0]
+    else
+      product = Item.where(category: cart_params[:category], scent: cart_params[:scent])[0]
     end
 
     if product[:color]
-      session[:cart] << {category: product[:category], scent: product[:scent], color: product[:color]}
+      session[:cart] << {id: product[:id], category: product[:category], scent: product[:scent], color: product[:color]}
     elsif !product[:color]
-      session[:cart] << {category: product[:category], scent: product[:scent]}
+      session[:cart] << {id: product[:id], category: product[:category], scent: product[:scent]}
       render json: { message: "Item successfully added to cart", cart: session[:cart] }
     else
       render json: { errors: "Product not found. Could not add product to cart", cart: session[:cart] }
@@ -38,6 +43,21 @@ class CartsController < ApplicationController
     # id = params[:id].to_i
     # session[:cart].delete(id)
     # redirect_to root_path
+
+    # * get product, remove product from cart
+
+    # ! Needs to be refactored into a helper method
+    product_category = cart_params[:category].delete(' ').classify.constantize
+    binding.pry
+
+    if product_category == "BubbleCandle"
+      options = product_category.where(scent: cart_params[:scent])
+      color = cart_params[:color]
+      product = options.where(color: color)
+    else 
+      product = product_category.find_by(scent: cart_params[:scent])
+      binding.pry
+    end
   end
 
   def show_cart
@@ -47,7 +67,7 @@ class CartsController < ApplicationController
   private
 
   def cart_params
-    params.require(:cart).permit(:category, :scent, :color)
+    params.require(:cart).permit(:id, :category, :scent, :color)
   end
 
   def initialize_session
