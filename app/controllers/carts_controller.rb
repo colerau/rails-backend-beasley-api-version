@@ -19,6 +19,13 @@ class CartsController < ApplicationController
       product = Item.where(category: cart_params[:category], scent: cart_params[:scent])[0]
     end
 
+    session[:cart].each do |cart_item|
+      if cart_item[:id] === product[:id]
+        render json: { errors: "Item already added to cart"}
+        return
+      end
+    end
+
     if product[:color]
       session[:cart] << {id: product[:id], category: product[:category], scent: product[:scent], color: product[:color]}
     elsif !product[:color]
