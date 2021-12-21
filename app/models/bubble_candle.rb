@@ -1,0 +1,2 @@
+class BubbleCandle < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class BodyButter < ApplicationRecord
+end
