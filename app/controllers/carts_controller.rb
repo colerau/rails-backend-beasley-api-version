@@ -3,8 +3,27 @@ class CartsController < ApplicationController
 
   def add_to_cart
     # product_category will be name of a model
-    # product_category = cart_params[:category].delete(' ').classify.constantize
-    # #! need to add code for if two products have same scent but diff colors
+    product_category = cart_params[:category].delete(' ').classify.constantize
+
+    if product_category == "BubbleCandle"
+      options = product_category.where(scent: cart_params[:scent])
+      color = cart_params[:color]
+      product = options.where(color: color)
+    else 
+      product = product_category.find_by(scent: cart_params[:scent])
+    end
+
+    if product[:color]
+      session[:cart] << {category: product[:category], scent: product[:scent], color: product[:color]}
+    elsif !product[:color]
+      session[:cart] << {category: product[:category], scent: product[:scent]}
+      render json: { message: "Item successfully added to cart", cart: session[:cart] }
+    else
+      render json: { errors: "Product not found. Could not add product to cart", cart: session[:cart] }
+    end
+
+    binding.pry
+
     # binding.pry
     # if product
   
@@ -15,8 +34,6 @@ class CartsController < ApplicationController
     # else 
     #   render json: { errors: "Product not found. Could not add product to cart" }
     # end
-
-    # session[:cart] = 
   end
 
   def remove_from_cart
