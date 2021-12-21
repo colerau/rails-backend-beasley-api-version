@@ -22,8 +22,6 @@ class CartsController < ApplicationController
       render json: { errors: "Product not found. Could not add product to cart", cart: session[:cart] }
     end
 
-    binding.pry
-
     # binding.pry
     # if product
   
@@ -40,6 +38,10 @@ class CartsController < ApplicationController
     # id = params[:id].to_i
     # session[:cart].delete(id)
     # redirect_to root_path
+  end
+
+  def show_cart
+    render json: session[:cart]
   end
 
   private
