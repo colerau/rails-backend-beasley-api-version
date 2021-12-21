@@ -4,4 +4,7 @@ Rails.application.routes.draw do
   post "/add-to-cart", to: "carts#add_to_cart"
   get "/show-cart", to: "carts#show_cart"
   post "/remove-from-cart", to: "carts#remove_from_cart"
+
+  # ! edit to post before deployement
+  get "/clear-cart", to: "carts#clear_cart"
 end
