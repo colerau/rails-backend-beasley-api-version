@@ -7,4 +7,6 @@ Rails.application.routes.draw do
 
   # ! edit to post before deployement
   get "/clear-cart", to: "carts#clear_cart"
+
+  post "/checkout", to: "carts#checkout"
 end

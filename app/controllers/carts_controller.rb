@@ -94,6 +94,10 @@ class CartsController < ApplicationController
     render json: session[:cart]
   end
 
+  def checkout
+    render json: {message: "this is a string"}
+  end
+
   private
 
   def cart_params
