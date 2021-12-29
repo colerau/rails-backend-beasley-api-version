@@ -41,13 +41,13 @@ Item.create(category: "Bubble Candle", scent: "Pumpkin Spice Latte", color: "Tin
 Item.create(category: "Bubble Candle", scent: "Pumpkin Spice Latte", color: "Plain")
 
 # Body Butter
-Item.create(category: "Body Butter", scent: "Lavender")
-Item.create(category: "Body Butter", scent: "Sweet Orange Mango")
-Item.create(category: "Body Butter", scent: "Grapefruit & Orange")
-Item.create(category: "Body Butter", scent: "Coconut & Vanilla")
-Item.create(category: "Body Butter", scent: "Oatmeal Cookie")
-Item.create(category: "Body Butter", scent: "Rose & Vanilla")
-
-
+Item.create(category: "Body Butter 4oz", scent: "Lavender", price: 20.00)
+Item.create(category: "Body Butter 4oz", scent: "Sweet Orange Mango", price: 20.00)
+Item.create(category: "Body Butter 4oz", scent: "Grapefruit & Orange", price: 20.00)
+Item.create(category: "Body Butter 4oz", scent: "Coconut & Vanilla", price: 20.00)
+Item.create(category: "Body Butter 4oz", scent: "Oatmeal Cookie", price: 20.00)
+Item.create(category: "Body Butter 4oz", scent: "Rose & Vanilla", price: 20.00)
 
 # rails g migration add_name_of_column_to_table_name name_of_column:datatype --no-test-framework
+
+# bin/rails generate controller Greetings hello

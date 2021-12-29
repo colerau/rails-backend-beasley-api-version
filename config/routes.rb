@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   get "/clear-cart", to: "carts#clear_cart"
 
   post "/checkout", to: "carts#checkout"
+
+  post "/purchase", to: "purchases#purchase"
 end
