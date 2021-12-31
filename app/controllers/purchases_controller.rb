@@ -40,16 +40,14 @@ class PurchasesController < ApplicationController
       environment: 'sandbox'
     )
 
-    result = client.checkout.create_checkout(
-      location_id: ENV["SANDBOX_LOCATION_ID"],
-      body: {
+    api_call_body = {
         idempotency_key: SecureRandom.uuid,
         order: {
           order: {
             location_id: ENV["SANDBOX_LOCATION_ID"],
             line_items: [
               {
-                name: ,
+                name: product_name_string,
                 quantity: "1",
                 base_price_money: {
                   amount: api_call_item_base_price,
@@ -75,11 +73,11 @@ class PurchasesController < ApplicationController
                   recipient: {
                     display_name: purchase_params[:customerName],
                     address: {
-                      address_line_1: "8118 61st Ave NW",
-                      address_line_2: "123",
-                      locality: "Gig Harbor",
-                      administrative_district_level_1: "Washington",
-                      postal_code: "98332",
+                      address_line_1: purchase_params[:addressLine1],
+                      address_line_2: purchase_params[:addressLine2],
+                      locality: purchase_params[:city],
+                      administrative_district_level_1: purchase_params[:state],
+                      postal_code: purchase_params[:postal_code],
                       country: "US"
                     }
                   }
@@ -87,11 +85,18 @@ class PurchasesController < ApplicationController
               }
             ]
           },
-          idempotency_key: "b9b65019-ecf9-4d83-a3bc-49b86f81a862"
+          idempotency_key: SecureRandom.uuid
         },
         merchant_support_email: "mistybeasley@beasleyscents.com"
       }
+
+    binding.pry
+
+    result = client.checkout.create_checkout(
+      location_id: ENV["SANDBOX_LOCATION_ID"], body: api_call_body
     )
+
+
 
     if result.success?
       puts result.data
