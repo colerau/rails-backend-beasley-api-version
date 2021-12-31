@@ -34,3 +34,5 @@
 .env
 
 /config/set.rb
+# Ignore application configuration
+/config/application.yml
