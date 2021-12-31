@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   post "/checkout", to: "carts#checkout"
 
   post "/purchase", to: "purchases#purchase"
+
+  post "/call-square-api", to: "purchases#call_square_api"
 end
