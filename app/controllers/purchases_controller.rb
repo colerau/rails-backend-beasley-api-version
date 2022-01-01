@@ -28,6 +28,7 @@ class PurchasesController < ApplicationController
     end
     if session[:cart][:price]
       api_call_item_base_price = session[:cart][:price].to_i * 100
+      product_name_string += ")"
     end
 
     tax = (api_call_item_base_price * 0.1040).to_i
