@@ -14,29 +14,28 @@ class PurchasesController < ApplicationController
   end
 
   def call_square_api
-    product_name_string = "Product: #{session[:cart][:category]}, Scent: #{session[:cart][:scent]}"
+    product_name_string = "#{session[:cart][:category]} (#{session[:cart][:scent]}"
 
     if session[:cart][:color]
-      product_name_string += ",Color: #{session[:cart][:color]}"
+      product_name_string += ", #{session[:cart][:color]})"
     end
     if session[:cart][:bodyButterWeight]
-      product_name_string += ", Weight: #{session[:cart][:bodyButterWeight]}"
+      product_name_string += ", #{session[:cart][:bodyButterWeight]})"
     end
+
     if session[:cart][:bodyButterPrice]
-      product_name_string += ", Price: #{session[:cart][:bodyButterPrice]}"
       api_call_item_base_price = session[:cart][:bodyButterPrice].to_i * 100
     end
     if session[:cart][:price]
-      product_name_string += ", Price: #{session[:cart][:price]}"
       api_call_item_base_price = session[:cart][:price].to_i * 100
     end
 
-    tax = api_call_item_base_price * 0.1040
+    tax = (api_call_item_base_price * 0.1040).to_i
 
     # Create an instance of the API Client and initialize it with the credentials 
     # for the Square account whose assets you want to manage.
     client = Square::Client.new(
-      access_token: ENV["SANDBOX_ACCESS_TOKEN"],
+      access_token: ENV["sandbox_access_token"],
       environment: 'sandbox'
     )
 
@@ -44,7 +43,7 @@ class PurchasesController < ApplicationController
         idempotency_key: SecureRandom.uuid,
         order: {
           order: {
-            location_id: ENV["SANDBOX_LOCATION_ID"],
+            location_id: ENV["sandbox_location_id"],
             line_items: [
               {
                 name: product_name_string,
@@ -77,7 +76,7 @@ class PurchasesController < ApplicationController
                       address_line_2: purchase_params[:addressLine2],
                       locality: purchase_params[:city],
                       administrative_district_level_1: purchase_params[:state],
-                      postal_code: purchase_params[:postal_code],
+                      postal_code: purchase_params[:postalCode],
                       country: "US"
                     }
                   }
@@ -90,18 +89,16 @@ class PurchasesController < ApplicationController
         merchant_support_email: "mistybeasley@beasleyscents.com"
       }
 
-    binding.pry
-
     result = client.checkout.create_checkout(
-      location_id: ENV["SANDBOX_LOCATION_ID"], body: api_call_body
+      location_id: ENV["sandbox_location_id"], body: api_call_body
     )
-
-
 
     if result.success?
       puts result.data
+      render json: {success: result.data.checkout[:checkout_page_url]}
     elsif result.error?
       warn result.errors
+      render json: {error: "Error: Could not pay with Square."}
     end
 
   end
