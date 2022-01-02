@@ -64,7 +64,9 @@ GEM
     coderay (1.1.3)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
+    daemons (1.3.1)
     erubi (1.10.0)
+    eventmachine (1.2.7)
     faraday (1.8.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -179,6 +181,10 @@ GEM
       faraday-http-cache (~> 2.2)
       faraday_middleware (~> 1.0)
       logging (~> 2.3)
+    thin (1.7.2)
+      daemons (~> 1.0, >= 1.0.9)
+      eventmachine (~> 1.0, >= 1.0.4)
+      rack (>= 1, < 3)
     thor (1.1.0)
     thread_safe (0.3.6)
     tzinfo (1.2.9)
@@ -204,6 +210,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   sqlite3 (~> 1.4)
   square.rb
+  thin
   tzinfo-data
 
 RUBY VERSION

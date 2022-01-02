@@ -36,15 +36,15 @@ class PurchasesController < ApplicationController
     # Create an instance of the API Client and initialize it with the credentials 
     # for the Square account whose assets you want to manage.
     client = Square::Client.new(
-      access_token: ENV["sandbox_access_token"],
-      environment: 'sandbox'
+      access_token: ENV["production_access_token_misty"],
+      environment: 'production'
     )
 
     api_call_body = {
         idempotency_key: SecureRandom.uuid,
         order: {
           order: {
-            location_id: ENV["sandbox_location_id"],
+            location_id: ENV["production_location_id_misty"],
             line_items: [
               {
                 name: product_name_string,
@@ -91,7 +91,7 @@ class PurchasesController < ApplicationController
       }
 
     result = client.checkout.create_checkout(
-      location_id: ENV["sandbox_location_id"], body: api_call_body
+      location_id: ENV["production_location_id_misty"], body: api_call_body
     )
 
     if result.success?
