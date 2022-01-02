@@ -121,6 +121,7 @@ GEM
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
+    pg (1.2.3)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -174,7 +175,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     square.rb (17.0.0.20211215)
       certifi (~> 2018.1, >= 2018.01.18)
       faraday (~> 1.0, >= 1.0.1)
@@ -202,13 +202,13 @@ DEPENDENCIES
   byebug
   figaro
   listen (~> 3.2)
+  pg (>= 0.18, < 2.0)
   pry
   puma (~> 4.1)
   rack-cors
   rails (~> 6.0.4, >= 6.0.4.4)
   spring
   spring-watcher-listen (~> 2.0.0)
-  sqlite3 (~> 1.4)
   square.rb
   thin
   tzinfo-data
